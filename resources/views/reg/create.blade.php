@@ -29,6 +29,10 @@
             <td><input type="text" name="pass"><br></td>
         </tr>
         <tr>
+            <td>确认密码:</td>
+            <td><input type="text" name="pass1"><br></td>
+        </tr>
+        <tr>
             <td> 公司地址:</td>
             <td> <input type="text" name="address"><br></td>
         </tr>

@@ -4,12 +4,16 @@
 <form>
     <table>
         <tr>
-            <td>APPID</td>
-            <td> </td>
+            <td>用户:</td>
+            <td>{{$person}}</td>
         </tr>
         <tr>
-            <td>SECRET</td>
-            <td> </td>
+            <td>APPID:</td>
+            <td>{{$appid}}</td>
+        </tr>
+        <tr>
+            <td>SECRET:</td>
+            <td>{{$secret}}</td>
         </tr>
     </table>
 </form>

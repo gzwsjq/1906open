@@ -22,3 +22,5 @@ Route::post('/regdo','RegController@regdo'); //注册的编辑
 
 Route::get('/login','RegController@login');//登录
 Route::post('/logindo','RegController@logindo');//登录编辑
+
+Route::get('/center','RegController@center'); //个人中心
