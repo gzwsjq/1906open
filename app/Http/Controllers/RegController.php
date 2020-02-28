@@ -73,18 +73,6 @@ class RegController extends Controller
     }
 
 
-    //上传文件
-    function upload($file){
-        if(request()->file($file)->isValid()) {
-            $photo =request()->file($file);
-            $store_result = $photo->store('uploads');
-
-            return $store_result;
-        }
-        exit('未获取到上传文件或上传过程出错');
-    }
-
-
     //登录视图
     public function login(){
         return view('reg/login');
@@ -114,8 +102,8 @@ class RegController extends Controller
         //将token保存到redis中
         $redis_token="token:".$token;
         $token_info=[
-            'uid'            =>$username->id,
-            'person'         =>$username->person,
+            'uid'            =>$username['id'],
+            'person'         =>$username['person'],
             'login_time'    =>time()
         ];
 
@@ -149,4 +137,52 @@ class RegController extends Controller
 
         return view('reg/center',['appid'=>$appid,'secret'=>$secret,'person'=>$person]);
     }
+
+    //获取accesstoken接口
+    public function getAccessToken(Request $request){
+        $appid=$request->input('appid');
+        $secret=$request->input('secret');
+
+        //判断
+        if(empty($appid)||empty($secret)){
+            echo "缺少用户信息";die;
+        }
+
+        //为用户生成access_token 以便后续调用
+        $appsecret=$appid.$secret.time().mt_rand().str::random(16);
+        $access_token=sha1($appsecret).md5($appsecret);
+
+        //将access_token存入到redis中  redis hash
+        $redis_h_token="h_token:".$access_token;
+
+        $info=[
+            'appid'    =>$appid,
+            'addtime' =>date('Y-m-d H:i:s')
+        ];
+
+
+        Redis::hMset($redis_h_token,$info);
+        Redis::expire($redis_h_token,7200);
+
+        $arr=[
+            'error'           =>0,
+            'access_token'   =>$access_token,
+            'expire'         =>7200
+        ];
+
+        return $arr;
+    }
+
+
+    //上传文件
+    function upload($file){
+        if(request()->file($file)->isValid()) {
+            $photo =request()->file($file);
+            $store_result = $photo->store('uploads');
+
+            return $store_result;
+        }
+        exit('未获取到上传文件或上传过程出错');
+    }
+
 }

@@ -24,3 +24,11 @@ Route::get('/login','RegController@login');//登录
 Route::post('/logindo','RegController@logindo');//登录编辑
 
 Route::get('/center','RegController@center'); //个人中心
+Route::get('/getAccessToken','RegController@getAccessToken'); //获取accesstoken接口
+
+//关于access_token
+Route::prefix('/user')->middleware('token')->group(function(){
+    Route::get('/test','Access\TokenController@test');//access_token接口测试
+    Route::get('/test1','Access\TokenController@test1');//access_token接口测试
+});
+
