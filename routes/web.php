@@ -32,3 +32,8 @@ Route::prefix('/user')->middleware('token')->group(function(){
     Route::get('/test1','Access\TokenController@test1');//access_token接口测试
 });
 
+
+//github的第三方登录
+Route::get('/github','GithubController@index');
+Route::get('/github/callback','GithubController@callback'); //用户授权回跳的页面
+

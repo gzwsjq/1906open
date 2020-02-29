@@ -120,6 +120,10 @@ class RegController extends Controller
         $token=cookie::get('token');
        // print_r($token);echo "<br>";
 
+        if(empty($token)){
+            echo "请先登录";die;
+        }
+
         //得到 token  拼接redis key
         $redis_token="token:".$token;
         //echo $key=$redis_token;echo "<br>";
@@ -128,14 +132,19 @@ class RegController extends Controller
         //print_r($token_info);echo "<br>";
 
         //获取用户信息
-        $appinfo=AppModel::where(['uid'=>$token_info['uid']])->first()->toArray();
-        //var_dump($appinfo);
+        $appinfo=AppModel::where(['uid'=>$token_info['uid']])->first();
+        if($appinfo){
+            $appid=$appinfo['appid'];
+            $secret=$appinfo['secret'];
+            $person=$token_info['person'];
 
-        $appid=$appinfo['appid'];
-        $secret=$appinfo['secret'];
-        $person=$token_info['person'];
+            return view('reg/center',['appid'=>$appid,'secret'=>$secret,'person'=>$person]);
+        }else{
+            echo "暂无应用信息";
+        }
 
-        return view('reg/center',['appid'=>$appid,'secret'=>$secret,'person'=>$person]);
+
+
     }
 
     //获取accesstoken接口
