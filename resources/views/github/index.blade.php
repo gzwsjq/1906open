@@ -81,8 +81,8 @@
 
     <div class="content">
         <div class="links">
-            <a href="https://github.com/login/oauth/authorize?client_id=9ed16dbb82f5d2612a0e&redirect_uri=http://open.1906.com/github/callback">GITHUB
-                {{--//<img src="storage_path/images/aaaa.jpg" alt="">--}}
+            <a href="https://github.com/login/oauth/authorize?client_id=9ed16dbb82f5d2612a0e&redirect_uri=http://open.1906.com/github/callback">
+                <img src="/aaaa.jpg" alt="" width="150px" height="150px" style="border-radius:50%;overflow:hidden;">
             </a>
         </div>
     </div>
